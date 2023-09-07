@@ -1,6 +1,7 @@
+import { apiKey } from './config.js';
 
 document.addEventListener('DOMContentLoaded', function () {
-  const API_KEY = apiKey
+  let API_KEY = apiKey
 
   const searchButton = document.getElementById('search');
   const locationInput = document.getElementById('location');
