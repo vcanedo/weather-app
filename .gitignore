@@ -1,0 +1,6 @@
+# Ignore config.js
+javascript/config.js
+
+# Ignore compiled SCSS files
+style/*.scss
+style/*.css.map
