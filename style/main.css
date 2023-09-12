@@ -77,4 +77,16 @@ body {
   font-weight: 500;
 }
 
+.fadeIn {
+  animation: 0.5s fadeIn forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes fadeIn {
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
 /*# sourceMappingURL=main.css.map */
