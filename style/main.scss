@@ -82,7 +82,59 @@ body{
       font-size: 14px;
       font-weight: 500;
     }
+    img {
+      width: 60%;
+      margin-top: 30px;
+    }
   }
+}
+
+.weather-details{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+
+  i {
+    color: #06283D;
+    font-size: 26px;
+    margin-right: 10px;
+    margin-top: 6px;
+  }
+
+  span {
+    color: #06283D;
+    font-size: 22px;
+    font-weight: 500;
+  }
+
+  p {
+    color: #06283D;
+    font-size: 14px;
+    font-weight: 500;
+  }
+}
+
+.weather-details .humidity, .weather-details .wind{
+  display: flex;
+  align-items: center;
+  width: 50%;
+  height: 100px;
+}
+
+.weather-details .humidity{
+  padding-left: 20px;
+  justify-content: flex-start;
+}
+
+.weather-details .wind{
+  padding-right: 20px;
+  justify-content: flex-end;
+}
+
+.weather-info, .weather-details{
+  scale: 0;
+  opacity: 0;
 }
 
 // END OF CONTAINER
