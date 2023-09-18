@@ -13,10 +13,13 @@ document.addEventListener('DOMContentLoaded', function () {
   const weatherDetails = document.querySelector('.weather-details');
   const humidity = document.querySelector('.weather-details .humidity span');
   const wind = document.querySelector('.weather-details .wind span');
+  const image = document.getElementById('image');
 
 
   searchButton.addEventListener('click', function () {
-    if (locationInput === '') {
+    const location = locationInput.value;
+
+    if (!location) {
       return;
     }
 
@@ -27,52 +30,58 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             locationName.textContent = data.name;
-            temperature.textContent = `Temperature: ${data.main.temp}°C`;
-            description.textContent = `Description: ${data.weather[0].description}`;
+          
+            // Weather Info div
             weatherInfo.classList.add('fadeIn');
+            temperature.innerHTML = `${parseInt(data.main.temp)}<span>°C</span>`;
+            // temperature.textContent = `Temperature: ${data.main.temp}°C`;
+            description.innerHTML = `${data.weather[0].description}`;
+            // description.textContent = `Description: ${data.weather[0].description}`;
+          
+            // Weather Details div
+            weatherDetails.classList.add('fadeIn');
+            humidity.innerHTML = `${data.main.humidity}%`;
+            wind.innerHTML = `${parseInt(data.wind.speed)}Km/h`;
+
+            switch (data.weather[0].main) {
+              case 'Clear':
+                image.src = 'images/sun.png';
+                break;
+        
+              case 'Rain':
+                image.src = 'images/rain.png';
+                break;
+        
+              case 'Snow':
+                image.src = 'images/snow.png';
+                break;
+        
+              case 'Clouds':
+                image.src = 'images/cloud.png';
+                break;
+        
+              case 'Haze':
+                image.src = 'images/fog.png';
+                break;
+        
+              default:
+                image.src = '';
+            }
+
+        weatherInfo.style.display = '';
+        weatherDetails.style.display = '';
+        container.style.height = '590px';
+          
         })
         .catch(error => {
             console.error('There was a problem fetching the data:', error);
             locationName.textContent = 'Location not found';
             temperature.textContent = '';
             description.textContent = '';
-        });
-
-      switch (json.weather[0].main) {
-        case 'Clear':
-            image.src = 'images/sun.png';
-            break;
-
-        case 'Rain':
-            image.src = 'images/rain.png';
-            break;
-
-        case 'Snow':
-            image.src = 'images/snow.png';
-            break;
-
-        case 'Clouds':
-            image.src = 'images/cloud.png';
-            break;
-
-        case 'Haze':
-            image.src = 'images/fog.png';
-            break;
-
-        default:
+            humidity.textContent = '';
+            wind.textContent = '';
             image.src = '';
-          }
-
-      temperature.innerHTML = `${parseInt(json.main.temp)}<span>°C</span>`;
-      description.innerHTML = `${json.weather[0].description}`;
-      humidity.innerHTML = `${json.main.humidity}%`;
-      wind.innerHTML = `${parseInt(json.wind.speed)}Km/h`;
-
-      weatherInfo.style.display = '';
-      weatherDetails.style.display = '';
-      weatherInfo.classList.add('fadeIn');
-      weatherDetails.classList.add('fadeIn');
-      container.style.height = '590px';
+        });
 
   });
 });
