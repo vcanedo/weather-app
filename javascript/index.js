@@ -1,13 +1,13 @@
-import { apiKey } from "./config";
+// import { apiKey } from "./config";
 
 document.addEventListener('DOMContentLoaded', function () {
-  let API_KEY = apiKey;
+  const API_KEY = '32252474d653ed36f5c633bd646d96b0';
 
   const container = document.querySelector('.container');
   const searchButton = document.getElementById('search');
   const locationInput = document.getElementById('location');
   const locationName = document.getElementById('location-name');
-  const weatherInfo = document.getElementsByClassName('weather-info');
+  const weatherInfo = document.querySelector('.weather-info');
   const temperature = document.getElementById('temperature');
   const description = document.getElementById('description');
   const weatherDetails = document.querySelector('.weather-details');
@@ -28,17 +28,17 @@ document.addEventListener('DOMContentLoaded', function () {
       fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
+
+            console.log('Success');
             locationName.textContent = data.name;
 
             // Weather Info div
-            weatherInfo.classList.add('fadeIn');
             temperature.innerHTML = `${parseInt(data.main.temp)}<span>°C</span>`;
             // temperature.textContent = `Temperature: ${data.main.temp}°C`;
             description.innerHTML = `${data.weather[0].description}`;
             // description.textContent = `Description: ${data.weather[0].description}`;
 
             // Weather Details div
-            weatherDetails.classList.add('fadeIn');
             humidity.innerHTML = `${data.main.humidity}%`;
             wind.innerHTML = `${parseInt(data.wind.speed)}Km/h`;
 
@@ -65,11 +65,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
               default:
                 image.src = '';
-            }
+              }
 
-        weatherInfo.style.display = '';
-        weatherDetails.style.display = '';
-        container.style.height = '590px';
+            weatherInfo.style.display = '';
+            weatherDetails.style.display = '';
+            weatherInfo.classList.add('fadeIn');
+            weatherDetails.classList.add('fadeIn');
+
+            container.style.height = '590px';
 
         })
         .catch(error => {
