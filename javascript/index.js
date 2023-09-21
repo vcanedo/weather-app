@@ -17,27 +17,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   searchButton.addEventListener('click', function () {
-    const location = locationInput.value;
 
+    const location = locationInput.value;
     if (!location) {
       return;
     }
 
-      const location = locationInput.value;
       const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&units=metric`;
 
       fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
             locationName.textContent = data.name;
-          
+
             // Weather Info div
             weatherInfo.classList.add('fadeIn');
             temperature.innerHTML = `${parseInt(data.main.temp)}<span>°C</span>`;
             // temperature.textContent = `Temperature: ${data.main.temp}°C`;
             description.innerHTML = `${data.weather[0].description}`;
             // description.textContent = `Description: ${data.weather[0].description}`;
-          
+
             // Weather Details div
             weatherDetails.classList.add('fadeIn');
             humidity.innerHTML = `${data.main.humidity}%`;
@@ -47,23 +46,23 @@ document.addEventListener('DOMContentLoaded', function () {
               case 'Clear':
                 image.src = 'images/sun.png';
                 break;
-        
+
               case 'Rain':
                 image.src = 'images/rain.png';
                 break;
-        
+
               case 'Snow':
                 image.src = 'images/snow.png';
                 break;
-        
+
               case 'Clouds':
                 image.src = 'images/cloud.png';
                 break;
-        
+
               case 'Haze':
                 image.src = 'images/fog.png';
                 break;
-        
+
               default:
                 image.src = '';
             }
@@ -71,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
         weatherInfo.style.display = '';
         weatherDetails.style.display = '';
         container.style.height = '590px';
-          
+
         })
         .catch(error => {
             console.error('There was a problem fetching the data:', error);
