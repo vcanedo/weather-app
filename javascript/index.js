@@ -1,7 +1,7 @@
 // import { apiKey } from "./config";
 
 document.addEventListener('DOMContentLoaded', function () {
-  const API_KEY = 'YOUR_API_KEY_HERE';
+  const API_KEY = '32252474d653ed36f5c633bd646d96b0';
 
   const container = document.querySelector('.container');
   const searchButton = document.getElementById('search');
