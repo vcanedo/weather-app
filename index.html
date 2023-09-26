@@ -11,39 +11,48 @@
     <script src="https://kit.fontawesome.com/e355c88124.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Weather App</h1>
-        <div class="search-container">
-          <i class="fa-solid fa-location-dot"></i>
-            <input type="text" id="location" placeholder="Enter location">
-            <button id="search" class="fa-solid fa-magnifying-glass"></button>
-        </div>
 
-        <div class="weather-info fadeIn">
-            <p id="location-name"></p>
-            <img src="" id="image">
-            <p id="temperature"></p>
-            <p id="description"></p>
-        </div>
-
-        <div class="weather-details fadeIn">
-          <div class="humidity">
-              <i class="fa-solid fa-water"></i>
-              <div class="text">
-                  <span></span>
-                  <p>Humidity</p>
-              </div>
-          </div>
-          <div class="wind">
-              <i class="fa-solid fa-wind"></i>
-              <div class="text">
-                  <span></span>
-                  <p>Wind Speed</p>
-              </div>
-          </div>
-        </div>
-
+  <div id="loading-container">
+    <div id="spinner">
     </div>
-    <script src="javascript/index.js"></script>
+  </div>
+
+  <div class="container">
+      <h1>Weather App</h1>
+      <div class="search-container">
+        <i class="fa-solid fa-location-dot"></i>
+          <input type="text" id="location" placeholder="Enter location">
+          <button id="search" class="fa-solid fa-magnifying-glass"></button>
+      </div>
+
+      <div class="weather-info fadeIn">
+          <p id="location-name"></p>
+          <img src="" id="image">
+          <p id="temperature"></p>
+          <p id="description"></p>
+      </div>
+
+      <div class="weather-details fadeIn">
+        <div class="humidity">
+            <i class="fa-solid fa-water"></i>
+            <div class="text">
+                <span></span>
+                <p>Humidity</p>
+            </div>
+        </div>
+        <div class="wind">
+            <i class="fa-solid fa-wind"></i>
+            <div class="text">
+                <span></span>
+                <p>Wind Speed</p>
+            </div>
+        </div>
+      </div>
+
+  </div>
+
+  <script src="javascript/index.js"></script>
+  <script src="javascript/loadingSpinner.js"></script>
+  
 </body>
 </html>
