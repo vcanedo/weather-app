@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
 
-            console.log('Success');
             locationName.textContent = data.name;
 
             // Weather Info div
@@ -71,19 +70,49 @@ document.addEventListener('DOMContentLoaded', function () {
             weatherDetails.style.display = '';
             weatherInfo.classList.add('fadeIn');
             weatherDetails.classList.add('fadeIn');
-
             container.style.height = '590px';
 
         })
         .catch(error => {
-            console.error('There was a problem fetching the data:', error);
-            locationName.textContent = 'Location not found';
-            temperature.textContent = '';
-            description.textContent = '';
-            humidity.textContent = '';
-            wind.textContent = '';
-            image.src = '';
+          console.error('There was a problem fetching the data -->', error);
+          locationName.textContent = 'Location not found';
+          temperature.textContent = '';
+          description.textContent = '';
+          humidity.textContent = '';
+          wind.textContent = '';
+          image.src = '';
         });
+
+    const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${API_KEY}&units=metric&cnt=5`;
+
+    const forecastContainer = document.getElementById('forecast-container');
+
+    fetch(forecastUrl)
+      .then(response => response.json())
+      .then(data => {
+        data.list.forEach(forecast => {
+          const forecastDate = new Date(forecast.dt * 1000);
+          const day = forecastDate.toLocaleDateString('en-US', { weekday: 'short' });
+          const temperature = forecast.main.temp.toFixed(0);
+          const description = forecast.weather[0].description;
+
+          const forecastDayDiv = document.createElement('div');
+          forecastDayDiv.classList.add('forecast-day');
+          forecastDayDiv.innerHTML = `
+            <h3>${day}</h3>
+            <p>${temperature}°C</p>
+            <p>${description}</p>
+          `;
+
+          forecastContainer.appendChild(forecastDayDiv);
+          // forecastDayDiv.classList.add('fadeIn');
+        });
+      })
+      .catch(error => {
+        console.error('There was a problem fetching forecast data -->', error);
+      });
+
+
 
   });
 });

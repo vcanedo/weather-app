@@ -14,6 +14,46 @@ body{
   background: #0c517c;
 }
 
+// LOADING SPINNER FEATURE
+
+#loading-container {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 1000;
+
+  #spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+#loading-container.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+// END OF LOADING SPINNER FEATURE
+// CONTAINER
+
 .container {
   position: relative;
   width: 400px;
@@ -137,6 +177,41 @@ body{
   opacity: 0;
 }
 
+/* Styles for the forecast container */
+#forecast-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-top: rgba(12, 81, 124, .5) 1px solid;
+  // overflow-x: scroll;
+  color: #0c517c;
+}
+
+/* Styles for individual forecast days */
+.forecast-day {
+  text-align: center;
+  padding: 10px;
+}
+
+/* Style for forecast day headings */
+.forecast-day h3 {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+/* Style for temperature and description */
+.forecast-day p {
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Add styles for the loading icon or spinner, if applicable */
+.loading-icon {
+  /* Styles for the loading icon or spinner */
+}
+
 // END OF CONTAINER
 
 .fadeIn{
@@ -149,39 +224,4 @@ body{
       scale: 1;
       opacity: 1;
   }
-}
-
-#loading-container {
-  opacity: 1;
-  transition: opacity 0.5s ease;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  z-index: 1000;
-
-  #spinner {
-    border: 4px solid rgba(255, 255, 255, 0.3);
-    border-top: 4px solid #3498db;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
-
-#loading-container.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-@keyframes spin {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
