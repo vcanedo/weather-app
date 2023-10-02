@@ -104,43 +104,26 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(response => response.json())
       .then(data => {
 
-        // Function to check if a date is today's date
-        function isToday(today, date) {
-          return date.getDate() === today.getDate() &&
-            date.getMonth() === today.getMonth() &&
-            date.getFullYear() === today.getFullYear();
-        }
-
-        // Function to format a date to a day of the week
-        function formatDay(date) {
-          return date.toLocaleDateString('en-US', { weekday: 'short' });
-        }
-
-        const today = new Date();
-
-        // Filter out forecast data for today
-        const filteredForecastData = data.list.filter(forecast => {
-          const forecastDate = new Date(forecast.dt * 1000);
-          return !isToday(today, forecastDate);
-        });
-
         // Loop through filtered forecast data and create a div for each day
-        filteredForecastData.forEach(forecast => {
+        data.list.slice(1).forEach(forecast => {
+
 
           const forecastDate = new Date(forecast.dt * 1000);
-          const dayOfWeek = formatDay(forecastDate);
+          const dayOfWeek = forecastDate.toLocaleDateString('en-US', { weekday: 'short' });
           const temperature = forecast.main.temp.toFixed(0);
           const description = forecast.weather[0].description;
+          console.log(dayOfWeek, temperature, description);
 
-          const forecastDayDiv = document.createElement('div');
-          forecastDayDiv.classList.add('forecast-day');
-          forecastDayDiv.innerHTML = `
+          const forecastDayContainer = document.createElement('div');
+          forecastDayContainer.classList.add('forecast-day')
+
+          forecastDayContainer.innerHTML = `
             <h3>${dayOfWeek}</h3>
             <p>${temperature}°C</p>
             <p>${description}</p>
           `;
 
-          forecastContainer.appendChild(forecastDayDiv);
+          forecastContainer.appendChild(forecastDayContainer);
           // forecastDayDiv.classList.add('fadeIn');
         });
       })
