@@ -64,6 +64,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 image.src = 'images/fog.png';
                 break;
 
+              case 'Mist':
+                image.src = 'images/fog.png';
+                break;
+
               default:
                 image.src = '';
               }
@@ -99,33 +103,39 @@ document.addEventListener('DOMContentLoaded', function () {
     fetch(forecastUrl)
       .then(response => response.json())
       .then(data => {
-        const today = new Date();
 
         // Function to check if a date is today's date
-        function isToday(date) {
+        function isToday(today, date) {
           return date.getDate() === today.getDate() &&
             date.getMonth() === today.getMonth() &&
             date.getFullYear() === today.getFullYear();
         }
 
+        // Function to format a date to a day of the week
+        function formatDay(date) {
+          return date.toLocaleDateString('en-US', { weekday: 'short' });
+        }
+
+        const today = new Date();
+
         // Filter out forecast data for today
         const filteredForecastData = data.list.filter(forecast => {
           const forecastDate = new Date(forecast.dt * 1000);
-          return !isToday(forecastDate);
+          return !isToday(today, forecastDate);
         });
 
         // Loop through filtered forecast data and create a div for each day
         filteredForecastData.forEach(forecast => {
 
           const forecastDate = new Date(forecast.dt * 1000);
-          const day = forecastDate.toLocaleDateString('en-US', { weekday: 'short' });
+          const dayOfWeek = formatDay(forecastDate);
           const temperature = forecast.main.temp.toFixed(0);
           const description = forecast.weather[0].description;
 
           const forecastDayDiv = document.createElement('div');
           forecastDayDiv.classList.add('forecast-day');
           forecastDayDiv.innerHTML = `
-            <h3>${day}</h3>
+            <h3>${dayOfWeek}</h3>
             <p>${temperature}°C</p>
             <p>${description}</p>
           `;
