@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   searchButton.addEventListener('click', function () {
 
+    // Weather Info
+
     const location = locationInput.value;
     if (!location) {
       return;
@@ -62,6 +64,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 image.src = 'images/fog.png';
                 break;
 
+              case 'Mist':
+                image.src = 'images/fog.png';
+                break;
+
               default:
                 image.src = '';
               }
@@ -83,28 +89,41 @@ document.addEventListener('DOMContentLoaded', function () {
           image.src = '';
         });
 
+    // Forecast
+
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${API_KEY}&units=metric&cnt=5`;
 
     const forecastContainer = document.getElementById('forecast-container');
 
+    // clear forecast container
+    while (forecastContainer.firstChild) {
+      forecastContainer.removeChild(forecastContainer.firstChild);
+    }
+
     fetch(forecastUrl)
       .then(response => response.json())
       .then(data => {
-        data.list.forEach(forecast => {
+
+        // Loop through filtered forecast data and create a div for each day
+        data.list.slice(1).forEach(forecast => {
+
+
           const forecastDate = new Date(forecast.dt * 1000);
-          const day = forecastDate.toLocaleDateString('en-US', { weekday: 'short' });
+          const dayOfWeek = forecastDate.toLocaleDateString('en-US', { weekday: 'short' });
           const temperature = forecast.main.temp.toFixed(0);
           const description = forecast.weather[0].description;
+          console.log(dayOfWeek, temperature, description);
 
-          const forecastDayDiv = document.createElement('div');
-          forecastDayDiv.classList.add('forecast-day');
-          forecastDayDiv.innerHTML = `
-            <h3>${day}</h3>
+          const forecastDayContainer = document.createElement('div');
+          forecastDayContainer.classList.add('forecast-day')
+
+          forecastDayContainer.innerHTML = `
+            <h3>${dayOfWeek}</h3>
             <p>${temperature}°C</p>
             <p>${description}</p>
           `;
 
-          forecastContainer.appendChild(forecastDayDiv);
+          forecastContainer.appendChild(forecastDayContainer);
           // forecastDayDiv.classList.add('fadeIn');
         });
       })
