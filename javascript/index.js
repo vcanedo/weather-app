@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   searchButton.addEventListener('click', function () {
 
+    // Weather Info
+
     const location = locationInput.value;
     if (!location) {
       return;
@@ -83,14 +85,38 @@ document.addEventListener('DOMContentLoaded', function () {
           image.src = '';
         });
 
+    // Forecast
+
     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${API_KEY}&units=metric&cnt=5`;
 
     const forecastContainer = document.getElementById('forecast-container');
 
+    // clear forecast container
+    while (forecastContainer.firstChild) {
+      forecastContainer.removeChild(forecastContainer.firstChild);
+    }
+
     fetch(forecastUrl)
       .then(response => response.json())
       .then(data => {
-        data.list.forEach(forecast => {
+        const today = new Date();
+
+        // Function to check if a date is today's date
+        function isToday(date) {
+          return date.getDate() === today.getDate() &&
+            date.getMonth() === today.getMonth() &&
+            date.getFullYear() === today.getFullYear();
+        }
+
+        // Filter out forecast data for today
+        const filteredForecastData = data.list.filter(forecast => {
+          const forecastDate = new Date(forecast.dt * 1000);
+          return !isToday(forecastDate);
+        });
+
+        // Loop through filtered forecast data and create a div for each day
+        filteredForecastData.forEach(forecast => {
+
           const forecastDate = new Date(forecast.dt * 1000);
           const day = forecastDate.toLocaleDateString('en-US', { weekday: 'short' });
           const temperature = forecast.main.temp.toFixed(0);
